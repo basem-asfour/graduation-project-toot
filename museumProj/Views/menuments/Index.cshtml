@@ -1,0 +1,61 @@
+﻿@model IEnumerable<museumProj.Models.menument>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2>All Monuments</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",null,new { @class="btn btn-primary"})
+</p>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-6 mb-4">
+
+            <!-- Illustrations -->
+            <div class="card shadow mb-4">
+                <a href="~/menuments/details/@item.id">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">@(item.name.Length !=0? item.name:" ") </h6>
+                    </div>
+                </a>
+                <div class="card-body">
+                    <a href="~/menuments/details/@item.id">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="@Url.Content(item.menument_images.FirstOrDefault().image)" alt="">
+                        </div>
+                    </a>
+                    <p>@item.description</p>
+                    <a target="_blank" rel="nofollow" href="" data-toggle="modal" data-target="#exampleModalCenter@(item.id)">View QR Image &rarr;</a>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter@(item.id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle@(item.id)">Map Image</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="@Url.Content(item.QR_image)" alt="There Is No QR" style="width:100%;" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

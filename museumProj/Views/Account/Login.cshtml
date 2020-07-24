@@ -1,0 +1,91 @@
+﻿@using museumProj.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_Layoutlog_reg.cshtml";
+}
+@*<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">*@
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "user", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+                @* Enable this once you have account confirmation enabled for password reset functionality
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>*@
+
+
+
+                <!-- Outer Row -->
+                <div class="row justify-content-center">
+
+                    <div class="col-xl-10 col-lg-12 col-md-9">
+
+                        <div class="card o-hidden border-0 shadow-lg my-5">
+                            <div class="card-body p-0">
+                                <!-- Nested Row within Card Body bg-login-image-->
+                                <div class="row">
+                                    <div class="col-lg-6 d-none d-lg-block "style="background-image: url('../../Content/images/92438594_217682922778854_8318323677699506176_n.jpg'); background-repeat: no-repeat; background-position: center center; background-size: cover; "></div>
+                                    <div class="col-lg-6">
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                            </div>
+                                            <div class="form-group">
+
+                                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-user", id = "exampleInputEmail", placeholder = "Enter Email Address..." })
+                                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-user", id = "exampleInputPassword", placeholder = "Password" })
+                                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox small">
+                                                    @Html.CheckBoxFor(m => m.RememberMe, new { @class = "custom-control-input", id = "customCheck" })
+                                                    <label class="custom-control-label" for="customCheck">Remember Me</label>
+                                                </div>
+                                            </div>
+                                            <input type="submit" value="Login" class="btn btn-primary btn-user btn-block" />
+                                            <hr>
+                                            <a href="index.html" class="btn btn-google btn-user btn-block">
+                                                <i class="fab fa-google fa-fw"></i> Login with Google
+                                            </a>
+                                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                                <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                            </a>
+                                            <hr>
+                                            <div class="text-center">
+                                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                            </div>
+                                            <div class="text-center">
+                                                @Html.ActionLink("Create an Account!", "Register", new { @class = "small" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        @*</section>
+    </div>
+    @*<div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>*@
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a467e1902fac46f99e511484e4fec63d" Name="Diagram1">
+        <EntityTypeShape EntityType="tootModel.catogery" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="tootModel.menument_images" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="tootModel.menument" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="tootModel.place_images" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="tootModel.place" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="tootModel.places_cat" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="tootModel.FK_places_cat_catogery" />
+        <AssociationConnector Association="tootModel.FK_menument_images_menuments" />
+        <AssociationConnector Association="tootModel.FK_menuments_places" />
+        <AssociationConnector Association="tootModel.FK_place_images_places" />
+        <AssociationConnector Association="tootModel.FK_places_cat_places" />
+        <EntityTypeShape EntityType="tootModel.AspNetUser" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="tootModel.gift" Width="1.5" PointX="5.625" PointY="7.25" />
+        <EntityTypeShape EntityType="tootModel.house" Width="1.5" PointX="3.375" PointY="7" />
+        <AssociationConnector Association="tootModel.FK_gifts_houses" />
+        <AssociationConnector Association="tootModel.FK_houses_houses" />
+        <AssociationConnector Association="tootModel.FK_houses_houses1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

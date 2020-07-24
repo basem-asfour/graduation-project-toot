@@ -1,0 +1,662 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="tootModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="catogery">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="gifts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="cost" Type="float" />
+          <Property Name="material" Type="nvarchar(max)" />
+          <Property Name="photo" Type="nvarchar(max)" />
+          <Property Name="houseId" Type="int" />
+          <Property Name="available" Type="bit" />
+        </EntityType>
+        <EntityType Name="houses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="photo" Type="nvarchar(max)" />
+          <Property Name="governorate" Type="nvarchar(max)" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="Lattitude" Type="decimal" Precision="18" Scale="9" />
+          <Property Name="Longitude" Type="decimal" Precision="18" Scale="9" />
+          <Property Name="placeId" Type="int" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="menument_images">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menument_id" Type="int" />
+          <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="altr" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="menuments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="voice_note" Type="nvarchar(max)" />
+          <Property Name="QR_image" Type="nvarchar(max)" />
+          <Property Name="no_of_scans" Type="int" />
+          <Property Name="place_id" Type="int" />
+        </EntityType>
+        <EntityType Name="place_images">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="place_id" Type="int" />
+          <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="altr" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="places">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="dates" Type="nvarchar(max)" />
+          <Property Name="fees" Type="nvarchar(max)" />
+          <Property Name="map" Type="nvarchar(max)" />
+          <Property Name="Lattitude" Type="decimal" Precision="18" Scale="9" />
+          <Property Name="Longitude" Type="decimal" Precision="18" Scale="9" />
+          <Property Name="TimeZone" Type="datetime" />
+          <Property Name="governorate" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="places_cat">
+          <Key>
+            <PropertyRef Name="place_id" />
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="place_id" Type="int" Nullable="false" />
+          <Property Name="cat_id" Type="int" Nullable="false" />
+          <Property Name="rank" Type="int" />
+        </EntityType>
+        <Association Name="FK_gifts_houses">
+          <End Role="houses" Type="Self.houses" Multiplicity="0..1" />
+          <End Role="gifts" Type="Self.gifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="houses">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="gifts">
+              <PropertyRef Name="houseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_houses_houses">
+          <End Role="places" Type="Self.places" Multiplicity="0..1" />
+          <End Role="houses" Type="Self.houses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="places">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="houses">
+              <PropertyRef Name="placeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_menument_images_menuments">
+          <End Role="menuments" Type="Self.menuments" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="menument_images" Type="Self.menument_images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menuments">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="menument_images">
+              <PropertyRef Name="menument_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_menuments_places">
+          <End Role="places" Type="Self.places" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="menuments" Type="Self.menuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="places">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="menuments">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_place_images_places">
+          <End Role="places" Type="Self.places" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="place_images" Type="Self.place_images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="places">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="place_images">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_places_cat_catogery">
+          <End Role="catogery" Type="Self.catogery" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="places_cat" Type="Self.places_cat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catogery">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="places_cat">
+              <PropertyRef Name="cat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_places_cat_places">
+          <End Role="places" Type="Self.places" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="places_cat" Type="Self.places_cat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="places">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="places_cat">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tootModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="catogery" EntityType="Self.catogery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="gifts" EntityType="Self.gifts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="houses" EntityType="Self.houses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="menument_images" EntityType="Self.menument_images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="menuments" EntityType="Self.menuments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="place_images" EntityType="Self.place_images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="places" EntityType="Self.places" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="places_cat" EntityType="Self.places_cat" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_gifts_houses" Association="Self.FK_gifts_houses">
+            <End Role="houses" EntitySet="houses" />
+            <End Role="gifts" EntitySet="gifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_houses_houses" Association="Self.FK_houses_houses">
+            <End Role="places" EntitySet="places" />
+            <End Role="houses" EntitySet="houses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_menument_images_menuments" Association="Self.FK_menument_images_menuments">
+            <End Role="menuments" EntitySet="menuments" />
+            <End Role="menument_images" EntitySet="menument_images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_menuments_places" Association="Self.FK_menuments_places">
+            <End Role="places" EntitySet="places" />
+            <End Role="menuments" EntitySet="menuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_place_images_places" Association="Self.FK_place_images_places">
+            <End Role="places" EntitySet="places" />
+            <End Role="place_images" EntitySet="place_images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_places_cat_catogery" Association="Self.FK_places_cat_catogery">
+            <End Role="catogery" EntitySet="catogery" />
+            <End Role="places_cat" EntitySet="places_cat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_places_cat_places" Association="Self.FK_places_cat_places">
+            <End Role="places" EntitySet="places" />
+            <End Role="places_cat" EntitySet="places_cat" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="tootModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="catogery">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="places_cat" Relationship="tootModel.FK_places_cat_catogery" FromRole="catogery" ToRole="places_cat" />
+        </EntityType>
+        <EntityType Name="menument_images">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menument_id" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="altr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="menument" Relationship="tootModel.FK_menument_images_menuments" FromRole="menument_images" ToRole="menument" />
+        </EntityType>
+        <EntityType Name="menument">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="voice_note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QR_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="no_of_scans" Type="Int32" />
+          <Property Name="place_id" Type="Int32" />
+          <NavigationProperty Name="menument_images" Relationship="tootModel.FK_menument_images_menuments" FromRole="menument" ToRole="menument_images" />
+          <NavigationProperty Name="place" Relationship="tootModel.FK_menuments_places" FromRole="menument" ToRole="place" />
+        </EntityType>
+        <EntityType Name="place_images">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="place_id" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="altr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="place" Relationship="tootModel.FK_place_images_places" FromRole="place_images" ToRole="place" />
+        </EntityType>
+        <EntityType Name="place">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dates" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fees" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="map" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="menuments" Relationship="tootModel.FK_menuments_places" FromRole="place" ToRole="menument" />
+          <NavigationProperty Name="place_images" Relationship="tootModel.FK_place_images_places" FromRole="place" ToRole="place_images" />
+          <NavigationProperty Name="places_cat" Relationship="tootModel.FK_places_cat_places" FromRole="place" ToRole="places_cat" />
+          <Property Name="Lattitude" Type="Decimal" Precision="18" Scale="9" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="9" />
+          <Property Name="TimeZone" Type="DateTime" Precision="3" />
+          <Property Name="governorate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="houses" Relationship="tootModel.FK_houses_houses1" FromRole="place" ToRole="house" />
+        </EntityType>
+        <EntityType Name="places_cat">
+          <Key>
+            <PropertyRef Name="place_id" />
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="place_id" Type="Int32" Nullable="false" />
+          <Property Name="cat_id" Type="Int32" Nullable="false" />
+          <Property Name="rank" Type="Int32" />
+          <NavigationProperty Name="catogery" Relationship="tootModel.FK_places_cat_catogery" FromRole="places_cat" ToRole="catogery" />
+          <NavigationProperty Name="place" Relationship="tootModel.FK_places_cat_places" FromRole="places_cat" ToRole="place" />
+        </EntityType>
+        <EntityContainer Name="tootEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="catogeries" EntityType="Self.catogery" />
+          <EntitySet Name="menument_images" EntityType="Self.menument_images" />
+          <EntitySet Name="menuments" EntityType="Self.menument" />
+          <EntitySet Name="place_images" EntityType="Self.place_images" />
+          <EntitySet Name="places" EntityType="Self.place" />
+          <EntitySet Name="places_cat" EntityType="Self.places_cat" />
+          <AssociationSet Name="FK_places_cat_catogery" Association="tootModel.FK_places_cat_catogery">
+            <End Role="catogery" EntitySet="catogeries" />
+            <End Role="places_cat" EntitySet="places_cat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_menument_images_menuments" Association="tootModel.FK_menument_images_menuments">
+            <End Role="menument" EntitySet="menuments" />
+            <End Role="menument_images" EntitySet="menument_images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_menuments_places" Association="tootModel.FK_menuments_places">
+            <End Role="place" EntitySet="places" />
+            <End Role="menument" EntitySet="menuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_place_images_places" Association="tootModel.FK_place_images_places">
+            <End Role="place" EntitySet="places" />
+            <End Role="place_images" EntitySet="place_images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_places_cat_places" Association="tootModel.FK_places_cat_places">
+            <End Role="place" EntitySet="places" />
+            <End Role="places_cat" EntitySet="places_cat" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUsers" EntityType="tootModel.AspNetUser" />
+          <EntitySet Name="gifts" EntityType="tootModel.gift" />
+          <EntitySet Name="houses" EntityType="tootModel.house" />
+          <AssociationSet Name="FK_gifts_houses" Association="tootModel.FK_gifts_houses">
+            <End Role="house" EntitySet="houses" />
+            <End Role="gift" EntitySet="gifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_houses_houses" Association="tootModel.FK_houses_houses">
+            <End Role="house" EntitySet="houses" />
+            <End Role="house1" EntitySet="houses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_houses_houses1" Association="tootModel.FK_houses_houses1">
+            <End Role="place" EntitySet="places" />
+            <End Role="house" EntitySet="houses" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_places_cat_catogery">
+          <End Type="tootModel.catogery" Role="catogery" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tootModel.places_cat" Role="places_cat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="catogery">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="places_cat">
+              <PropertyRef Name="cat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_menument_images_menuments">
+          <End Type="tootModel.menument" Role="menument" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tootModel.menument_images" Role="menument_images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menument">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="menument_images">
+              <PropertyRef Name="menument_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_menuments_places">
+          <End Type="tootModel.place" Role="place" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tootModel.menument" Role="menument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="place">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="menument">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_place_images_places">
+          <End Type="tootModel.place" Role="place" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tootModel.place_images" Role="place_images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="place">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="place_images">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_places_cat_places">
+          <End Type="tootModel.place" Role="place" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="tootModel.places_cat" Role="places_cat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="place">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="places_cat">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="gift">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="cost" Type="Double" />
+          <Property Name="material" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="houseId" Type="Int32" />
+          <Property Name="available" Type="Boolean" />
+          <NavigationProperty Name="house" Relationship="tootModel.FK_gifts_houses" FromRole="gift" ToRole="house" />
+        </EntityType>
+        <EntityType Name="house">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="governorate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Lattitude" Type="Decimal" Precision="18" Scale="9" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="9" />
+          <Property Name="placeId" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="gifts" Relationship="tootModel.FK_gifts_houses" FromRole="house" ToRole="gift" />
+          <NavigationProperty Name="houses1" Relationship="tootModel.FK_houses_houses" FromRole="house" ToRole="house1" />
+          <NavigationProperty Name="house1" Relationship="tootModel.FK_houses_houses" FromRole="house1" ToRole="house" />
+          <NavigationProperty Name="place" Relationship="tootModel.FK_houses_houses1" FromRole="house" ToRole="place" />
+        </EntityType>
+        <Association Name="FK_gifts_houses">
+          <End Type="tootModel.house" Role="house" Multiplicity="0..1" />
+          <End Type="tootModel.gift" Role="gift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="house">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="gift">
+              <PropertyRef Name="houseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_houses_houses">
+          <End Type="tootModel.house" Role="house" Multiplicity="0..1" />
+          <End Type="tootModel.house" Role="house1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="house">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="house1">
+              <PropertyRef Name="placeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_houses_houses1">
+          <End Type="tootModel.place" Role="place" Multiplicity="0..1" />
+          <End Type="tootModel.house" Role="house" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="place">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="house">
+              <PropertyRef Name="placeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="tootModelStoreContainer" CdmEntityContainer="tootEntities">
+          <EntitySetMapping Name="catogeries">
+            <EntityTypeMapping TypeName="tootModel.catogery">
+              <MappingFragment StoreEntitySet="catogery">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="menument_images">
+            <EntityTypeMapping TypeName="tootModel.menument_images">
+              <MappingFragment StoreEntitySet="menument_images">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="menument_id" ColumnName="menument_id" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="altr" ColumnName="altr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="menuments">
+            <EntityTypeMapping TypeName="tootModel.menument">
+              <MappingFragment StoreEntitySet="menuments">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="voice_note" ColumnName="voice_note" />
+                <ScalarProperty Name="QR_image" ColumnName="QR_image" />
+                <ScalarProperty Name="no_of_scans" ColumnName="no_of_scans" />
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="place_images">
+            <EntityTypeMapping TypeName="tootModel.place_images">
+              <MappingFragment StoreEntitySet="place_images">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="altr" ColumnName="altr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="places">
+            <EntityTypeMapping TypeName="tootModel.place">
+              <MappingFragment StoreEntitySet="places">
+                <ScalarProperty Name="governorate" ColumnName="governorate" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="dates" ColumnName="dates" />
+                <ScalarProperty Name="fees" ColumnName="fees" />
+                <ScalarProperty Name="map" ColumnName="map" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="places_cat">
+            <EntityTypeMapping TypeName="tootModel.places_cat">
+              <MappingFragment StoreEntitySet="places_cat">
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="tootModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gifts">
+            <EntityTypeMapping TypeName="tootModel.gift">
+              <MappingFragment StoreEntitySet="gifts">
+                <ScalarProperty Name="available" ColumnName="available" />
+                <ScalarProperty Name="houseId" ColumnName="houseId" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="material" ColumnName="material" />
+                <ScalarProperty Name="cost" ColumnName="cost" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="houses">
+            <EntityTypeMapping TypeName="tootModel.house">
+              <MappingFragment StoreEntitySet="houses">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="placeId" ColumnName="placeId" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Lattitude" ColumnName="Lattitude" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="governorate" ColumnName="governorate" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

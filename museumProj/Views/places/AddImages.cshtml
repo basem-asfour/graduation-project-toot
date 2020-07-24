@@ -1,0 +1,151 @@
+﻿@model IEnumerable<museumProj.Models.place_images>
+
+@{
+    ViewBag.Title = "AddImages";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h4>@Model.FirstOrDefault().place.name images</h4>
+
+
+@using (Html.BeginForm("AddImages", "places", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input type="hidden" name="place_id" value="@Model.FirstOrDefault().place_id" />
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.place_id, "place_id", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("place_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.place_id, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstOrDefault().image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="image_file" class="form-control btn btn-outline-info" value="Choose Image .." />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("alternative Text", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstOrDefault().altr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstOrDefault().altr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add" class="btn btn-outline-primary" />
+            </div>
+        </div>
+
+    </div>
+}
+<!-- Header -->
+<div class="header" id="myHeader">
+    <h1>Image Grid</h1>
+    <p>Click on the buttons to change the grid view.</p>
+    <button class="btn new" onclick="one()">1</button>
+    <button class="btn active new" onclick="two()">2</button>
+    <button class="btn new" onclick="four()">4</button>
+</div>
+
+
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+    <div class="column">
+        <img src="@Url.Content(item.image)" alt="No Image" style="width:100%">
+
+    </div>
+    }
+</div>
+
+
+
+
+
+
+
+<script>
+    // Get the elements with class="column"
+    var elements = document.getElementsByClassName("column");
+
+    // Declare a loop variable
+    var i;
+
+    // Full-width images
+    function one() {
+        for (i = 0; i < elements.length; i++) {
+            elements[i].style.msFlex = "100%";  // IE10
+            elements[i].style.flex = "100%";
+        }
+    }
+
+    // Two images side by side
+    function two() {
+        for (i = 0; i < elements.length; i++) {
+            elements[i].style.msFlex = "50%";  // IE10
+            elements[i].style.flex = "50%";
+        }
+    }
+
+    // Four images side by side
+    function four() {
+        for (i = 0; i < elements.length; i++) {
+            elements[i].style.msFlex = "25%";  // IE10
+            elements[i].style.flex = "25%";
+        }
+    }
+
+    // Add active class to the current button (highlight it)
+    var header = document.getElementById("myHeader");
+    var btns = header.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+</script>
+
+
+<style type="text/css">
+    .header {
+        text-align: center;
+        padding: 32px;
+    }
+
+    .row {
+        display: -ms-flexbox; /* IE 10 */
+        display: flex;
+        -ms-flex-wrap: wrap; /* IE 10 */
+        flex-wrap: wrap;
+        padding: 0 4px;
+    }
+
+    /* Create two equal columns that sits next to each other */
+    .column {
+        -ms-flex: 50%; /* IE 10 */
+        flex: 50%;
+        padding: 0 4px;
+    }
+        .column img {
+            margin-top: 8px;
+            vertical-align: middle;
+        }
+    .new:hover {
+        background-color: #ddd;
+    }
+
+
+</style>
